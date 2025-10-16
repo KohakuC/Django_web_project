@@ -1,0 +1,43 @@
+services:
+  django:
+  
+    volumes:
+      - '.:/app'
+    build:
+      context: docker
+    environment:
+      HOST:
+      DB_NAME:
+      DB_USER:
+      DB_PASSWORD:
+      DB_HOST:
+      DB_PORT:
+      SECRET_KEY:
+      DEBUG:
+    ports:
+      - ${PORT}:8000
+    restart: 'always'
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    
+
+  mariadb:
+    image: mariadb
+    volumes:
+      - "mariadb:/var/lib/mysql:rw"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_interval: 3s
+      start_period: 15s
+      interval: 2m
+      retries: 3
+      timeout: 5s 
+
+volumes: 
+  mariadb:

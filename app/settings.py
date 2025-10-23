@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Media Directory with .mp3 files
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'data' 
+MEDIA_ROOT = BASE_DIR / 'data'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

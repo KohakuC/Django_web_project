@@ -30,6 +30,7 @@ class CreateMusic(CreateView):
     model = models.MyMusic
     form_class = forms.MusicForm
     template_name = "add.html"
+    success_url = reverse_lazy('home')
 
 
 class DeleteMusic(DeleteView):
